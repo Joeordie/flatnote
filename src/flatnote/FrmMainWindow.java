@@ -57,6 +57,11 @@ public class FrmMainWindow extends javax.swing.JFrame {
         btnNewNotebook.setText("New");
 
         btnNewNote.setText("New");
+        btnNewNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewNoteActionPerformed(evt);
+            }
+        });
 
         btnSaveNote.setText("Save");
         btnSaveNote.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -140,6 +145,10 @@ public class FrmMainWindow extends javax.swing.JFrame {
         //String NoteComp[2];
         
     }//GEN-LAST:event_btnSaveNoteMouseClicked
+
+    private void btnNewNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewNoteActionPerformed
+        FlatNote.NewNote(tbxNoteName.getText());
+    }//GEN-LAST:event_btnNewNoteActionPerformed
 
     /**
      * @param args the command line arguments
