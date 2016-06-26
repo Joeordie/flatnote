@@ -15,6 +15,7 @@ java = portable and cross platform
 standard folder structure = no need for a database again portable and light.
 
 Features
+
 1. Writes Notes/Notebooks **Done!**
 
 2. Reads Notes **Done!**
