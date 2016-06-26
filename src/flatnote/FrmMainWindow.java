@@ -36,14 +36,15 @@ public class FrmMainWindow extends javax.swing.JFrame {
         lblNoteName = new javax.swing.JLabel();
         tbxNoteName = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        EditNoteBody = new javax.swing.JEditorPane();
+        editNoteBody = new javax.swing.JEditorPane();
         btnNewNotebook = new javax.swing.JButton();
         btnNewNote = new javax.swing.JButton();
         btnSaveNote = new javax.swing.JButton();
         btnDeleteNote = new javax.swing.JButton();
         btnSelectNote = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menFileSelectDirectory = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,9 +53,14 @@ public class FrmMainWindow extends javax.swing.JFrame {
 
         lblNoteName.setText("Note Name");
 
-        jScrollPane1.setViewportView(EditNoteBody);
+        jScrollPane1.setViewportView(editNoteBody);
 
         btnNewNotebook.setText("New");
+        btnNewNotebook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewNotebookActionPerformed(evt);
+            }
+        });
 
         btnNewNote.setText("New");
         btnNewNote.addActionListener(new java.awt.event.ActionListener() {
@@ -69,13 +75,32 @@ public class FrmMainWindow extends javax.swing.JFrame {
                 btnSaveNoteMouseClicked(evt);
             }
         });
+        btnSaveNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveNoteActionPerformed(evt);
+            }
+        });
 
         btnDeleteNote.setText("Delete");
+        btnDeleteNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteNoteActionPerformed(evt);
+            }
+        });
 
-        btnSelectNote.setText("Select");
+        btnSelectNote.setText("Search");
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        menFileSelectDirectory.setText("File");
+
+        jMenuItem1.setText("Select Directory");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menFileSelectDirectory.add(jMenuItem1);
+
+        jMenuBar1.add(menFileSelectDirectory);
 
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
@@ -140,6 +165,13 @@ public class FrmMainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void DisplayNote(String[] strNoteComp){
+        tbxNoteName.setText(strNoteComp[1]);
+        tbxNotebookName.setText(strNoteComp[0]);
+        editNoteBody.setText(strNoteComp[2]);
+        
+    }
+        
     private void btnSaveNoteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveNoteMouseClicked
         // TODO add your handling code here:
         //String NoteComp[2];
@@ -147,8 +179,39 @@ public class FrmMainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveNoteMouseClicked
 
     private void btnNewNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewNoteActionPerformed
-        FlatNote.NewNote(tbxNoteName.getText());
+        String[] strNoteComp = new String[2];
+        strNoteComp[0] = tbxNotebookName.getText();
+        strNoteComp[1] = tbxNoteName.getText();
+        FlatNote.NewNote(strNoteComp);
     }//GEN-LAST:event_btnNewNoteActionPerformed
+
+    private void btnSaveNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveNoteActionPerformed
+        // TODO add your handling code here:
+        String[] strNoteComp = new String[3];
+        strNoteComp[0] = tbxNotebookName.getText();
+        strNoteComp[1] = tbxNoteName.getText();
+        strNoteComp[2] = editNoteBody.getText();
+        FlatNote.SaveNote(strNoteComp);
+                
+    }//GEN-LAST:event_btnSaveNoteActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        FlatNote.SelectDirectory();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void btnDeleteNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteNoteActionPerformed
+        String[] strNoteComp = new String[2];
+        strNoteComp[0] = tbxNotebookName.getText();
+        strNoteComp[1] = tbxNoteName.getText();
+        FlatNote.DeleteNote(strNoteComp);
+                
+    }//GEN-LAST:event_btnDeleteNoteActionPerformed
+
+    private void btnNewNotebookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewNotebookActionPerformed
+        
+        String strNotebookName = tbxNotebookName.getText();
+        FlatNote.NewNotebook(strNotebookName);
+    }//GEN-LAST:event_btnNewNotebookActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,18 +249,19 @@ public class FrmMainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JEditorPane EditNoteBody;
     private javax.swing.JButton btnDeleteNote;
     private javax.swing.JButton btnNewNote;
     private javax.swing.JButton btnNewNotebook;
     private javax.swing.JButton btnSaveNote;
     private javax.swing.JButton btnSelectNote;
-    private javax.swing.JMenu jMenu1;
+    public javax.swing.JEditorPane editNoteBody;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblNoteName;
     private javax.swing.JLabel lblNotebook;
+    private javax.swing.JMenu menFileSelectDirectory;
     private javax.swing.JTextField tbxNoteName;
     private javax.swing.JTextField tbxNotebookName;
     // End of variables declaration//GEN-END:variables
