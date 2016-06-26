@@ -182,7 +182,10 @@ public class FrmMainWindow extends javax.swing.JFrame {
         String[] strNoteComp = new String[2];
         strNoteComp[0] = tbxNotebookName.getText();
         strNoteComp[1] = tbxNoteName.getText();
-        FlatNote.NewNote(strNoteComp);
+        if (FlatNote.NewNote(strNoteComp) == 1 ){
+            DisplayNote(FlatNote.readNote(strNoteComp));
+        }
+        
     }//GEN-LAST:event_btnNewNoteActionPerformed
 
     private void btnSaveNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveNoteActionPerformed

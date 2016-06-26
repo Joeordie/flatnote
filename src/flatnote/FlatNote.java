@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
@@ -40,7 +41,7 @@ public class FlatNote {
     public static void NewNotebook(String varNotbookloc){
         try {
             //This method creates a new "notebook"  which is just a folder. 
-            String strNotebookName = strFilePath+"/"+varNotbookloc;
+            String strNotebookName = strFilePath+varNotbookloc;
             //look to see if the notbook exists
             File objNote = new File(strNotebookName);
             //Sanity check to see if the folder is already there.
@@ -57,26 +58,55 @@ public class FlatNote {
         }
     }
     
-    public static void NewNote(String[] NoteComp){
+    public static int NewNote(String[] NoteComp){
         String strNoteLocation = strFilePath+NoteComp[0]+"/"+NoteComp[1]+".txt";
+        int rtnInt = 0;
         try{
-                
             objMessage alertBox = new objMessage();
             File objNote = new File(strNoteLocation);
+
             //Check to see if your destroying another note with same name!
             if (objNote.exists() && !objNote.isDirectory()) { 
                 alertBox.infoBox("File " + NoteComp[1] + " exists!\nDo you want to open the note? ", "Warning!"); 
-                
+
+                //Ask if you want to continue. 
+                if (alertBox.confirmBox()==0)rtnInt = 1;
             }
-          //need a way to open the note and write to screen.
+            else objNote.createNewFile();
         }
         catch(Exception e){
         e.printStackTrace();
+        } 
+        return rtnInt;
+    }
+    
+    public static String[] readNote(String[] NoteComp){
+        String strNoteLocation = strFilePath+NoteComp[0]+"/"+NoteComp[1]+".txt";
+        String[] rtnNoteComp = new String[3];
+        rtnNoteComp[0] = NoteComp[0];
+        rtnNoteComp[1] = NoteComp[1]; 
+        //rtnNoteComp[2] = NoteComp[2];
+        try {
+            BufferedReader noteRead = new BufferedReader(new FileReader(strNoteLocation));
+                        
+                        String line = noteRead.readLine();
+                        String lineAssembly = line; 
+                        line = noteRead.readLine();
+                        while(line != null){
+                            lineAssembly = (lineAssembly + "\n"+ line);
+                            line = noteRead.readLine();
+                            
+                            
+                        }
+                        rtnNoteComp[2] = lineAssembly;
         }
-
-        
-            //stub for switchfocusandclear editNoteBody(); 
-            }
+        catch(Exception e){
+            e.printStackTrace();
+                }    
+        return rtnNoteComp;
+    }
+    
+    
     
     public static void SaveNote(String[] NoteComp){
         //This method makes the magic happen!!!
