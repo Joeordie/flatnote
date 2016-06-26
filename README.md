@@ -11,10 +11,13 @@ of where my data went and how it sync'd.
 So here is my architecture for the given problem: 
 
 java = portable and cross platform
+
 *flat* txt files = simple and small for portability
+
 standard folder structure = no need for a database again portable and light.
 
 Features
+
 1. Writes Notes/Notebooks **Done!**
 
 2. Reads Notes **Done!**
