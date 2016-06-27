@@ -26,7 +26,7 @@ Features
 
 4. Overwrite Protection **Done!**
 
-5. Windows Friendly
+5. Windows Friendly **99%!** (no bugs i have found)
 
 6. link highlighting
 
