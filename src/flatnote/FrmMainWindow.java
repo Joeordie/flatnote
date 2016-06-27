@@ -6,6 +6,9 @@
 package flatnote;
 
 import java.io.File; 
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.JFileChooser;
 /**
  *
  * @author joeordie
@@ -33,6 +36,7 @@ public class FrmMainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        FileChooser = new javax.swing.JFileChooser();
         lblNotebook = new javax.swing.JLabel();
         lblNoteName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -42,10 +46,10 @@ public class FrmMainWindow extends javax.swing.JFrame {
         btnSaveNote = new javax.swing.JButton();
         btnDeleteNote = new javax.swing.JButton();
         btnSelectNote = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnRefreshNoteName = new javax.swing.JButton();
         cbxNoteName = new javax.swing.JComboBox<>();
         cbxNotebookName = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        btnRefreshNotebookName = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menFileSelectDirectory = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -59,14 +63,14 @@ public class FrmMainWindow extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(editNoteBody);
 
-        btnNewNotebook.setText("New");
+        btnNewNotebook.setText("New/Open");
         btnNewNotebook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNewNotebookActionPerformed(evt);
             }
         });
 
-        btnNewNote.setText("New");
+        btnNewNote.setText("New/Open");
         btnNewNote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNewNoteActionPerformed(evt);
@@ -94,22 +98,28 @@ public class FrmMainWindow extends javax.swing.JFrame {
 
         btnSelectNote.setText("Search");
 
-        jButton1.setText("Refresh");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRefreshNoteName.setText("Refresh");
+        btnRefreshNoteName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRefreshNoteNameActionPerformed(evt);
             }
         });
 
         cbxNoteName.setEditable(true);
         cbxNoteName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "new" }));
 
+        cbxNotebookName.setEditable(true);
         cbxNotebookName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "new" }));
-
-        jButton2.setText("Refresh");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cbxNotebookName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cbxNotebookNameActionPerformed(evt);
+            }
+        });
+
+        btnRefreshNotebookName.setText("Refresh");
+        btnRefreshNotebookName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshNotebookNameActionPerformed(evt);
             }
         });
 
@@ -145,12 +155,12 @@ public class FrmMainWindow extends javax.swing.JFrame {
                             .addComponent(lblNoteName))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxNoteName, 0, 338, Short.MAX_VALUE)
+                            .addComponent(cbxNoteName, 0, 299, Short.MAX_VALUE)
                             .addComponent(cbxNotebookName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnRefreshNoteName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRefreshNotebookName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNewNotebook)
@@ -172,12 +182,12 @@ public class FrmMainWindow extends javax.swing.JFrame {
                     .addComponent(lblNotebook)
                     .addComponent(btnNewNotebook)
                     .addComponent(cbxNotebookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnRefreshNotebookName))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNoteName)
                     .addComponent(btnNewNote)
-                    .addComponent(jButton1)
+                    .addComponent(btnRefreshNoteName)
                     .addComponent(cbxNoteName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
@@ -226,7 +236,16 @@ public class FrmMainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveNoteActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        FlatNote.SelectDirectory();
+        JFileChooser chooser = new JFileChooser(); 
+        chooser.setFileSelectionMode(1);
+        int intReturnValue = chooser.showOpenDialog(this);
+        if (intReturnValue == 0){
+            String filename = String.valueOf(chooser.getSelectedFile());
+            FlatNote.strFilePath = filename; 
+            btnRefreshNotebookName.doClick();
+            btnRefreshNoteName.doClick();
+            
+        } 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btnDeleteNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteNoteActionPerformed
@@ -243,7 +262,7 @@ public class FrmMainWindow extends javax.swing.JFrame {
         FlatNote.NewNotebook(strNotebookName);
     }//GEN-LAST:event_btnNewNotebookActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRefreshNoteNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshNoteNameActionPerformed
         File folder = new File(FlatNote.strFilePath+"/"+String.valueOf(cbxNotebookName.getSelectedItem()));
         cbxNoteName.removeAllItems();
         File[] listOfFiles = folder.listFiles();
@@ -256,19 +275,23 @@ public class FrmMainWindow extends javax.swing.JFrame {
             }
             
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRefreshNoteNameActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnRefreshNotebookNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshNotebookNameActionPerformed
         File folder = new File(FlatNote.strFilePath);
-        cbxNoteName.removeAllItems();
+        cbxNotebookName.removeAllItems();
         File[] listOfFiles = folder.listFiles();
-        
+
         for (File file : listOfFiles ){
             if (file.isDirectory()) {
                 cbxNotebookName.addItem(file.getName());
             }    
         }        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRefreshNotebookNameActionPerformed
+
+    private void cbxNotebookNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNotebookNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxNotebookNameActionPerformed
 
     
     
@@ -308,16 +331,17 @@ public class FrmMainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser FileChooser;
     private javax.swing.JButton btnDeleteNote;
     private javax.swing.JButton btnNewNote;
     private javax.swing.JButton btnNewNotebook;
+    private javax.swing.JButton btnRefreshNoteName;
+    private javax.swing.JButton btnRefreshNotebookName;
     private javax.swing.JButton btnSaveNote;
     private javax.swing.JButton btnSelectNote;
     private javax.swing.JComboBox<String> cbxNoteName;
     private javax.swing.JComboBox<String> cbxNotebookName;
     public javax.swing.JEditorPane editNoteBody;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -326,4 +350,8 @@ public class FrmMainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblNotebook;
     private javax.swing.JMenu menFileSelectDirectory;
     // End of variables declaration//GEN-END:variables
+
+    public void loadmagic() {
+        jMenuItem1.doClick();
+    }
 }
