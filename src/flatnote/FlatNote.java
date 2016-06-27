@@ -27,21 +27,23 @@ public class FlatNote {
     public static void main(String[] args) {
         //construct the windows we need. 
         FrmMainWindow mainwindow = new FrmMainWindow();
-        FrmFileBrowser selector = new FrmFileBrowser();
-        //hide the file selector till we need it. 
-        selector.hide();
+        mainwindow.loadmagic();
         
         
     }    
-    
-    public static void SelectDirectory(){
-        //This selects the top directory for all notebooks. 
+   
+    private static String osCheck(){
+        /*stub for OS checker 
+          this must check for win then load a String called slashy
+          it gets either "/" for linux or "\" for windows. 
+        */
+        return "linux";
     }
     
     public static void NewNotebook(String varNotbookloc){
         try {
             //This method creates a new "notebook"  which is just a folder. 
-            String strNotebookName = strFilePath+varNotbookloc;
+            String strNotebookName = strFilePath+"/"+varNotbookloc;
             //look to see if the notbook exists
             File objNote = new File(strNotebookName);
             //Sanity check to see if the folder is already there.
@@ -59,7 +61,7 @@ public class FlatNote {
     }
     
     public static int NewNote(String[] NoteComp){
-        String strNoteLocation = strFilePath+NoteComp[0]+"/"+NoteComp[1]+".txt";
+        String strNoteLocation = strFilePath+"/"+NoteComp[0]+"/"+NoteComp[1]+".txt";
         int rtnInt = 0;
         try{
             objMessage alertBox = new objMessage();
@@ -81,7 +83,7 @@ public class FlatNote {
     }
     
     public static String[] readNote(String[] NoteComp){
-        String strNoteLocation = strFilePath+NoteComp[0]+"/"+NoteComp[1]+".txt";
+        String strNoteLocation = strFilePath+"/"+NoteComp[0]+"/"+NoteComp[1]+".txt";
         String[] rtnNoteComp = new String[3];
         rtnNoteComp[0] = NoteComp[0];
         rtnNoteComp[1] = NoteComp[1]; 
@@ -111,13 +113,13 @@ public class FlatNote {
     public static void SaveNote(String[] NoteComp){
         //This method makes the magic happen!!!
         //Create full filepath for note.txt
-        String strNoteLocation = strFilePath+NoteComp[0]+"/"+NoteComp[1]+".txt";
+        String strNoteLocation = strFilePath+"/"+NoteComp[0]+"/"+NoteComp[1]+".txt";
 
         try{
 
             objMessage alertBox = new objMessage();
             File objNote = new File(strNoteLocation);
-            //Check to see if your destroying another note with same name!
+            //Check to see if your destroying another note with same name!``
             if (objNote.exists() && !objNote.isDirectory()) { 
                 alertBox.infoBox("File " + NoteComp[1] + " exists!", "Warning!"); 
                 //Confirmation box 0 = overwrite. 
